@@ -1,0 +1,13 @@
+Options -MultiViews
+RewriteEngine On
+# Prevent people from looking directly into folders
+Options -Indexes
+# If the following conditions are true, then rewrite the URL:
+# If the requested filename is not a directory,
+RewriteCond %{REQUEST_FILENAME} !-d
+# If the requested filename is not a regular file that exists,
+RewriteCond %{REQUEST_FILENAME} !-f
+# If the requested filename is not a symbolic link,
+RewriteCond %{REQUEST_FILENAME} !-l
+
+RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
