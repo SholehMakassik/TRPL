@@ -20,6 +20,14 @@ class Expense extends Model
         $query->execute();
         return $query->fetchAll();
     }
+    public function getMine($expOwner)
+    {
+        $sql = "SELECT * FROM expenseview WHERE expOwner = :expOwner";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':expOwner' => $expOwner);
+        $query->execute($parameters);
+        return $query->fetchAll();
+    }
 
     public function getExpense($expID)
     {
@@ -38,11 +46,17 @@ class Expense extends Model
         $query->execute($parameters);
     }
 
-    public function updateExpense($expProjectID, $expOwner, $expType, $expNominal, $expProof, $expID)
+    public function updateExpense($expProjectID, $expOwner, $expType, $expNominal, $expProof, $expStatus,$expID)
     {
         $sql = "UPDATE expense SET expProjectID= :expProjectID,expOwner= :expOwner,expType= :expType,expNominal= :expNominal,expProof= :expProof,expStatus= :expStatus WHERE expID=:expID";
         $query = $this->db->prepare($sql);
-        $parameters = array(':expID' => $expID, ':expOwner' => $expOwner, ':expType' => $expType, ':expProjectID' => $expProjectID, ':expNominal' => $expNominal, ':expProof' => $expProof);
+        $parameters = array(':expID' => $expID, ':expOwner' => $expOwner, ':expType' => $expType, ':expProjectID' => $expProjectID, ':expNominal' => $expNominal, ':expProof' => $expProof, ':expStatus'=>$expStatus);
+        $query->execute($parameters);
+    }
+    public function deleteExpense($expID){
+        $sql = "DELETE FROM expense WHERE expID = :expID";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':expID' => $expID);
         $query->execute($parameters);
     }
 }

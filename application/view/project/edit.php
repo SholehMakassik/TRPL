@@ -1,5 +1,8 @@
-<?php $needJS = array("datepicker"); ?>
-<style type="text/css"> @import url("<?php echo URL; ?>css/bootstrap-datepicker.min.css"); </style>
+<?php $needJS = array("datepicker", "chosen"); ?>
+<style type="text/css">
+    @import url("<?php echo URL; ?>css/bootstrap-datepicker.min.css");
+    @import url("<?php echo URL; ?>css/chosen.min.css");
+</style>
 
 <div class="container">
     <form class="form-horizontal" action="<?php echo URL; ?>project/updateProject" method="POST"
@@ -10,7 +13,7 @@
             <div class="form-group">
                 <label class="col-md-4 control-label" for="ClientMail">Client (E-Mail)</label>
                 <div class="col-md-5">
-                    <input id="ClientMail" name="ClientMail" type="text" placeholder="E-Mail Client"
+                    <input id="ClientMail" name="ClientMail" type="email" placeholder="E-Mail Client"
                            class="form-control input-md"
                            required=""
                            value="<?php echo htmlspecialchars($project->ClientMail, ENT_QUOTES, 'UTF-8'); ?>">
@@ -69,12 +72,24 @@
             <div class="form-group">
                 <label class="col-md-4 control-label" for="Proposal">Proposal</label>
                 <div class="col-md-5">
+                    <a href="<?php echo URL . 'proposal/' . $project->Proposal; ?>"><?php echo htmlspecialchars($project->Proposal, ENT_QUOTES, 'UTF-8'); ?></a>
                     <input type="file" name="Proposal" accept=".pdf">
                     <input id="Proposal" name="Proposal" class="form-control input-md" placeholder="namafile.pdf"
                            type="hidden" required=""
                            value="<?php echo htmlspecialchars($project->Proposal, ENT_QUOTES, 'UTF-8'); ?>">
 
 
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="Proposal">Kategori</label>
+                <div class="col-md-5">
+                    <select id="ProjectCategory" name="ProjectCategory[]" class="form-control chosen" multiple="multiple" required>
+                        <?php foreach ($category as $val){?>
+                            <option value="<?php echo $val->CategoryID ?>" <?php if(in_array($val->CategoryID,$projectCategory)) echo 'selected';?> ><?php echo $val->CategoryName ?></option>
+                        <?php }?>
+                    </select>
                 </div>
             </div>
             <!-- Button -->

@@ -12,6 +12,7 @@
             </h3>
             <h5 class="text-center">oleh <?php echo $task->TaskAuthor ?>
                 sampai <?php echo $task->TaskDueDate ?></h5>
+            <h5 class="text-center"> Kategori : <?php foreach ( $category as $cat ){ if (in_array($cat->CategoryID,$tCat)){ echo '<span class="label label-default">'. $cat->CategoryName .'</span> '; } } ?></h5>
             <hr>
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
@@ -35,6 +36,7 @@
                 </div>
             <?php } ?>
             <!--Comment-->
+            <?php if (in_array($_SESSION['UserID'],$worker)){?>
             <div class="row">
                 <div class="col-md-offset-3 col-md-6">
                     <form class=" form-horizontal"
@@ -77,6 +79,7 @@
                 </div>
 
             </div>
+            <?php }?>
         </div>
 
     </div>

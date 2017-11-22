@@ -8,6 +8,6 @@ require ROOT . 'vendor/autoload.php';
 
 require APP . 'config/config.php';
 
-use Kode\Core\Application;
+use Kode\Core\Router;
 
-$app = new Application();
+$app = new Router();

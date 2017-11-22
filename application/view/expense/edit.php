@@ -37,7 +37,9 @@
                 <div class="col-md-5">
                     <div class="input-group">
                         <span class="input-group-addon">Rp</span>
-                        <input type="number" name="expNominal" class="form-control" value="<?php echo $expense->expNominal ?>" aria-label="">
+                        <input type="number"
+                            <?php if ($_SESSION['UserLevel'] == 'SuperAdmin') { echo "disabled"; }?>
+                               required name="expNominal" class="form-control" value="<?php echo $expense->expNominal ?>" aria-label="">
                         <span class="input-group-addon">.-</span>
                     </div>
                 </div>
@@ -53,7 +55,9 @@
                         <img src="<?php echo URL . 'expenseFiles/' . $expense->expProof; ?>"
                              class="img-thumbnail img-responsive">
                     </a>
-                    <input type="file" name="expProof">
+                    <?php if ($_SESSION['UserLevel'] != 'SuperAdmin') { ?>
+                    <input type="file" name="expProof" accept="image/*">
+                    <?php } ?>
                 </div>
             </div>
 

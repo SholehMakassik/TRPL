@@ -56,6 +56,17 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="Category">Kategori</label>
+                <div class="col-md-5">
+                    <select id="TaskCategory" name="TaskCategory[]" class="form-control chosen" multiple="multiple" required>
+                        <?php foreach ($category as $val){ if (in_array($val->CategoryID,$pCat) || in_array($val->CategoryID,Array(1,2,3))){?>
+                            <option value="<?php echo $val->CategoryID ?>" ><?php echo $val->CategoryName ?></option>
+                        <?php }}?>
+                    </select>
+                </div>
+            </div>
+
             <!-- Button -->
             <div class="form-group">
                 <label class="col-md-4 control-label" for="submit_form"></label>

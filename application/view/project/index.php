@@ -91,6 +91,7 @@
                                                         class="fa fa-pencil" aria-hidden="true"></i></a>
                                             <a class="btn btn-danger"
                                                href="<?php echo URL . 'project/deleteProject/' . htmlspecialchars($project->ProjectID, ENT_QUOTES, 'UTF-8'); ?>"><i
+                                                        onclick="return confirm('Apa anda yakin?')"
                                                         class="fa fa-trash" aria-hidden="true"></i></a>
                                         <?php } ?>
                                     </td>

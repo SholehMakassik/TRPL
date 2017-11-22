@@ -66,6 +66,31 @@ class Task extends Model
         return $query->fetchAll(\PDO::FETCH_COLUMN, 0);
     }
 
+    public function getTaskCategory($TaskID)
+    {
+        $sql = "SELECT categoryID from taskcategory where TaskID = :TaskID";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':TaskID' => $TaskID);
+        $query->execute($parameters);
+        return $query->fetchAll(\PDO::FETCH_COLUMN, 0);
+    }
+
+    public function addTaskCategory($TaskID,$CategoryID)
+    {
+        $sql = "INSERT INTO taskcategory (TaskID, categoryID) VALUES (:TaskID, :CategoryID)";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':TaskID' => $TaskID, ':CategoryID' => $CategoryID);
+        $query->execute($parameters);
+    }
+
+    public function cleanTaskCategory($TaskID)
+    {
+        $sql = "DELETE FROM taskcategory WHERE TaskID=:TaskID";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':TaskID' => $TaskID);
+        $query->execute($parameters);
+    }
+
     public function addTask($ProjectId, $TaskAuthor, $TaskDueDate, $TaskDesc, $TaskName)
     {
         $sql = "INSERT INTO task (ProjectID, TaskAuthor,TaskDueDate,TaskDesc,TaskName) VALUES (:ProjectID, :TaskAuthor,:TaskDueDate, :TaskDesc, :TaskName)";

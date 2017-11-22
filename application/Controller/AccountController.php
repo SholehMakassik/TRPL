@@ -16,10 +16,17 @@ class AccountController
 
     public function index()
     {
-        $_SESSION['Controller'] = self::CName;
-        require APP . 'view/_templates/header.php';
-        require APP . 'view/account/index.php';
-        require APP . 'view/_templates/footer.php';
+        if ($_SESSION['UserLevel'] == 'SuperAdmin') {
+            $_SESSION['Controller'] = self::CName;
+
+            $Account = new Account();
+            $account = $Account->getAll();
+            require APP . 'view/_templates/header.php';
+            require APP . 'view/account/index.php';
+            require APP . 'view/_templates/footer.php';
+        } else {
+            header('location: ' . URL);
+        }
     }
 
     public function login()
@@ -69,4 +76,58 @@ class AccountController
         session_destroy();
         header('location: ' . URL);
     }
+
+    public function add()
+    {
+        if ($_SESSION['UserLevel'] == 'SuperAdmin') {
+            require APP . 'view/_templates/header.php';
+            require APP . 'view/account/add.php';
+            require APP . 'view/_templates/footer.php';
+        } else {
+            header('location: ' . URL); //go home
+        }
+    }
+
+    public function edit($UserID)
+    {
+        if ($_SESSION['UserLevel'] == 'SuperAdmin') {
+            $Account = new Account();
+            $account = $Account->getUserData($UserID);
+
+            require APP . 'view/_templates/header.php';
+            require APP . 'view/account/edit.php';
+            require APP . 'view/_templates/footer.php';
+        } else {
+            header('location: ' . URL); //go home
+        }
+    }
+
+    public function addUser()
+    {
+        if (isset($_POST['submit_add_user'])) {
+            $data = $_POST;
+            $Account = new Account();
+
+            $Account->addUser($data['Username'], $data['Password'], $data['UserLevel']);
+        }
+        header('location: ' . URL . 'account');
+    }
+    public function updateUser()
+    {
+        if (isset($_POST['submit_update_user'])) {
+            $data = $_POST;
+            print_r($data);
+
+
+            $Account = new Account();
+            $Account->updateUsername($data['Username'],$data['UserID']);
+            if (!empty($data['Password'])){ //password diedit
+                $Account->updateUserPassword($data['Password'],$data['UserID']);
+            }
+            $Account->updateUserLevel($data['UserLevel'],$data['UserID']);
+
+        }
+        header('location: ' . URL . 'account');
+    }
+
 }

@@ -35,7 +35,7 @@
                 <div class="col-md-5">
                     <div class="input-group">
                         <span class="input-group-addon">Rp</span>
-                        <input type="number" name="expNominal" class="form-control" aria-label="">
+                        <input type="number" required min="100" name="expNominal" class="form-control" aria-label="">
                         <span class="input-group-addon">.-</span>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                 <label class="col-md-4 control-label" for="expProof">Bukti Pengeluaran</label>
                 <div class="col-md-5">
 
-                    <input type="file" name="expProof">
+                    <input type="file" required name="expProof" accept="image/*">
                 </div>
             </div>
 

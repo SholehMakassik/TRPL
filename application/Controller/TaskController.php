@@ -8,12 +8,16 @@
 
 namespace Kode\Controller;
 
+use Kode\Core\LoggedIn;
 use Kode\Model\Account;
+use Kode\Model\Category;
+use Kode\Model\Project;
 use Kode\Model\Task;
 use Kode\Model\TaskComment;
 
-class TaskController
+class TaskController extends LoggedIn
 {
+    const CName = 'task';
     public function updateTask()
     {
         if (isset($_POST["submit_update_task"])) {
@@ -31,6 +35,10 @@ class TaskController
             foreach ($input['TaskWorker'] as $value) {
                 $Task->addTaskWorker($input['TaskID'], $value);
             }
+            $Task->cleanTaskCategory($input['TaskID']);
+            foreach($input['TaskCategory'] as $cat){
+                $Task->addTaskCategory($input['TaskID'],$cat);
+            }
         }
 
         header('location: ' . URL . 'project/view/' . $_POST['ProjectID']);
@@ -47,6 +55,9 @@ class TaskController
             foreach ($input['TaskWorker'] as $value) {
                 $Task->addTaskWorker($lastIndex, $value);
             }
+            foreach($input['TaskCategory'] as $cat){
+                $Task->addTaskCategory($lastIndex,$cat);
+            }
         }
         header('location: ' . URL . 'project/view/' . $_POST['ProjectID']);
     }
@@ -61,6 +72,13 @@ class TaskController
     {
         $Task = new Task();
         $task = $Task->getTask($TaskID);
+
+        $Category = new Category();
+        $Project = new Project();
+
+        $category = $Category->getAll();
+        $pCat = $Project->getCategory($task->ProjectID);
+        $tCat = $Task->getTaskCategory($TaskID);
 
         $Account = new Account();
         $account = $Account->getKaryawanList();
@@ -78,6 +96,12 @@ class TaskController
         $Account = new Account();
         $account = $Account->getKaryawanList();
 
+        $Category = new Category();
+        $Project = new Project();
+
+        $category = $Category->getAll();
+        $pCat = $Project->getCategory($ProjectID);
+
         require APP . 'view/_templates/header.php';
         require APP . 'view/task/add.php';
         require APP . 'view/_templates/footer.php';
@@ -89,6 +113,11 @@ class TaskController
     {
         $Task = new Task();
         $task = $Task->getTask($TaskID);
+        $worker = $Task->getWorker($TaskID);
+        $tCat = $Task->getTaskCategory($TaskID);
+
+        $Category = new Category();
+        $category = $Category->getAll();
 
         $TaskComment = new TaskComment();
         $taskComment = $TaskComment->getComment($TaskID);

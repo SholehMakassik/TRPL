@@ -16,6 +16,11 @@
 <?php } ?>
 <?php if (in_array("datepicker", $needJS)) { ?>
     <script src="<?php echo URL; ?>js/bootstrap-datepicker.js"></script>
+    <script>
+        var today = new Date();
+        console.log(today);
+        $('.date').datepicker('setStartDate', today);
+    </script>
 <?php } ?>
 <?php if (in_array("ekko-lightbox", $needJS)) { ?>
     <script src="<?php echo URL; ?>js/ekko-lightbox.min.js"></script>

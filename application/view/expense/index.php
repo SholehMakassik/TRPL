@@ -94,7 +94,12 @@
                                            href="<?php echo URL . 'expense/edit/'.$value->expID; ?>">
                                             <i class="fa fa-pencil" aria-hidden="true"></i>
                                         </a>
-
+                                        <?php if ($_SESSION['UserLevel']!='SuperAdmin' && $value->expStatus == 'Belum Diperiksa'){ ?>
+                                        <a class="btn btn-danger"
+                                           href="<?php echo URL . 'expense/delete/'.$value->expID; ?>">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </a>
+                                        <?php } ?>
                                     </td>
                                 </tr>
                             <?php } ?>

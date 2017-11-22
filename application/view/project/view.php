@@ -47,12 +47,20 @@
 
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="ProjectCategory">Kategori</label>
+                        <div class="col-md-5">
+                            <label class="control-label"> <?php foreach ( $category as $cat ){ if (in_array($cat->CategoryID,$pCat)){ echo '<span class="label label-default">'. $cat->CategoryName .'</span> '; } } ?> </label>
+
+                        </div>
+                    </div>
                     <!-- SendMail-->
                     <div class="form-group">
                         <div class="col-md-6 col-md-offset-3">
                             <input type="hidden" name="Proposal"
                                    value="<?php echo htmlspecialchars($project->Proposal, ENT_QUOTES, 'UTF-8'); ?>"/>
-                            <input type="submit" class="btn btn-block btn-primary" name="submit_send_mail" value="Kirim">
+                            <input type="submit" class="btn btn-block btn-primary" onclick="return confirm('Apa anda yakin akan mengirim?')" name="submit_send_mail" value="Kirim">
                         </div>
                     </div>
 

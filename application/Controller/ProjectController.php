@@ -8,11 +8,13 @@
 
 namespace Kode\Controller;
 
+use Kode\Core\LoggedIn;
+use Kode\Model\Category;
 use Kode\Model\Project;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-class ProjectController
+class ProjectController extends LoggedIn
 {
     const CName = 'project';
 
@@ -34,6 +36,9 @@ class ProjectController
     public function add()
     {
         if (isset($_SESSION['Username']) && $_SESSION['UserLevel'] == 'CustomerService') {
+            $Category = new Category();
+            $category = $Category->getAll();
+
             require APP . 'view/_templates/header.php';
             require APP . 'view/project/add.php';
             require APP . 'view/_templates/footer.php';
@@ -64,6 +69,14 @@ class ProjectController
             //input ke db
             $Project = new Project();
             $Project->addProject($_POST["ClientMail"], $_POST["ProjectName"], basename($name), $_POST["Deadline"]);
+            $lastIndex = $Project->db->lastInsertId();
+            $Pcat = $_POST['ProjectCategory'];
+                //print_r($Pcat);die();
+            foreach ($Pcat as $value) {
+                //echo $value;die();
+                $Project->addCategory($lastIndex, $value);
+                //echo '1';
+            }
 
         }
 
@@ -76,6 +89,10 @@ class ProjectController
             if (isset($ProjectID)) {
                 $Project = new Project();
                 $project = $Project->getProject($ProjectID);
+
+                $Category = new Category();
+                $category = $Category->getAll();
+                $projectCategory = $Project->getCategory($ProjectID);
 
                 require APP . 'view/_templates/header.php';
                 require APP . 'view/project/edit.php';
@@ -93,9 +110,16 @@ class ProjectController
         if (isset($ProjectID)) {
             $Project = new Project();
             $project = $Project->getProject($ProjectID);
+            $pCat = $Project->getCategory($ProjectID);
+
+            $Category = new Category();
+            $category = $Category->getAll();
+
             $Task = new TaskController();
             $task = $Task->getTaskPerProject($ProjectID);
             //$data = (array)$project;
+
+
 
             require APP . 'view/_templates/header.php';
             require APP . 'view/project/view.php';
@@ -136,7 +160,7 @@ class ProjectController
 
 
             //checkbox
-            if (isset($input['Complete'])) {
+            if (isset($input['Deal'])) {
                 $status['Deal'] = 1;
             } else {
                 $status['Deal'] = 0;
@@ -149,6 +173,10 @@ class ProjectController
 
             $Project = new Project();
             $Project->updateProject($input["ClientMail"], $input{"ProjectName"}, $input{"Proposal"}, $input["Deadline"], $input["ProjectID"], $status['Deal'], $status['Complete']);
+            $Project->cleanCategory($input['ProjectID']);
+            foreach ($input['ProjectCategory'] as $value) {
+                $Project->addCategory($input['ProjectID'], $value);
+            }
         }
 
         header('location: ' . URL . 'project');

@@ -4,7 +4,7 @@ namespace Kode\Controller;
 
 class ErrorController
 {
-
+    const CName = 'error';
     public function index()
     {
         // load views

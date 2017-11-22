@@ -79,4 +79,24 @@ class Project extends Model
         $parameters = array(':ProjectID' => $ProjectID);
         $query->execute($parameters);
     }
+
+    public function addCategory($ProjectID,$CategoryID){
+        $sql = "INSERT INTO projectcategory (ProjectID, CategoryID) VALUES (:ProjectID, :CategoryID)";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':ProjectID' => $ProjectID, ':CategoryID' => $CategoryID);
+        $query->execute($parameters);
+    }
+    public function cleanCategory($ProjectID){
+        $sql = "DELETE FROM projectcategory WHERE ProjectID = :ProjectID";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':ProjectID' => $ProjectID);
+        $query->execute($parameters);
+    }
+    public function getCategory($ProjectID){
+        $sql = "SELECT CategoryID from projectcategory where ProjectID = :ProjectID";
+        $query = $this->db->prepare($sql);
+        $parameters = array(':ProjectID' => $ProjectID);
+        $query->execute($parameters);
+        return $query->fetchAll(\PDO::FETCH_COLUMN, 0);
+    }
 }

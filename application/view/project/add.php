@@ -1,5 +1,7 @@
-<?php $needJS = array("datepicker"); ?>
-<style type="text/css"> @import url("<?php echo URL; ?>css/bootstrap-datepicker.min.css"); </style>
+<?php $needJS = array("datepicker", "chosen"); ?>
+<style type="text/css">
+    @import url("<?php echo URL; ?>css/bootstrap-datepicker.min.css");
+    @import url("<?php echo URL; ?>css/chosen.min.css"); </style>
 <div class="container">
     <form class="form-horizontal" action="<?php echo URL; ?>project/addProject" method="POST"
           enctype="multipart/form-data">
@@ -9,7 +11,7 @@
             <div class="form-group">
                 <label class="col-md-4 control-label" for="ClientMail">Client (E-Mail)</label>
                 <div class="col-md-5">
-                    <input id="ClientMail" name="ClientMail" type="text" placeholder="E-Mail Client"
+                    <input id="ClientMail" name="ClientMail" type="email" placeholder="E-Mail Client"
                            class="form-control input-md"
                            required=""
                            value="">
@@ -49,7 +51,19 @@
                 <label class="col-md-4 control-label" for="Proposal">Proposal</label>
                 <div class="col-md-5">
 
-                    <input type="file" name="Proposal" accept=".pdf">
+                    <input type="file" required name="Proposal" accept=".pdf">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="Category">Kategori</label>
+                <div class="col-md-5">
+
+                    <select id="ProjectCategory" name="ProjectCategory[]" class="form-control chosen" multiple="multiple">
+                        <?php foreach ($category as $val){?>
+                            <option value="<?php echo $val->CategoryID ?>" ><?php echo $val->CategoryName ?></option>
+                        <?php }?>
+                    </select>
+
                 </div>
             </div>
             <!-- Button -->
