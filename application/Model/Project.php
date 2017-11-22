@@ -14,7 +14,7 @@ class Project extends Model
 {
     public function getAll()
     {
-        $sql = "SELECT ProjectID, ClientMail, ProjectName, Proposal, Deadline, Deal, Complete FROM projects";
+        $sql = "SELECT ProjectID, ClientMail, ProjectName, Proposal, Deadline, Deal, Complete, CompleteDate FROM projects";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
@@ -27,11 +27,9 @@ class Project extends Model
         return $query->fetchAll();
     }
 
-
-
     public function getDealt()
     {
-        $sql = "SELECT ProjectID, ClientMail, ProjectName, Proposal, Deadline, Deal, Complete FROM projects where Deal=1";
+        $sql = "SELECT ProjectID, ClientMail, ProjectName, Proposal, Deadline, Deal, Complete, CompleteDate FROM projects where Deal=1";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
@@ -39,7 +37,7 @@ class Project extends Model
 
     public function getCompleted()
     {
-        $sql = "SELECT ProjectID, ClientMail, ProjectName, Proposal, Deadline, Deal, Complete FROM projects where Complete=1";
+        $sql = "SELECT ProjectID, ClientMail, ProjectName, Proposal, Deadline, Deal, Complete, CompleteDate FROM projects where Complete=1";
         $query = $this->db->prepare($sql);
         $query->execute();
         return $query->fetchAll();
@@ -48,7 +46,7 @@ class Project extends Model
     public function getProject($ProjectID)
     {
 
-        $sql = "SELECT ProjectID, ClientMail, ProjectName, Proposal, Deadline, Deal, Complete FROM projects WHERE ProjectID = :ProjectID LIMIT 1";
+        $sql = "SELECT ProjectID, ClientMail, ProjectName, Proposal, Deadline, Deal, Complete, CompleteDate, Price, Contract FROM projects WHERE ProjectID = :ProjectID LIMIT 1";
         $query = $this->db->prepare($sql);
         $parameters = array(':ProjectID' => $ProjectID);
         $query->execute($parameters);
@@ -56,11 +54,11 @@ class Project extends Model
 
     }
 
-    public function updateProject($ClientMail, $ProjectName, $Proposal, $Deadline, $ProjectID, $Deal, $Complete)
+    public function updateProject($ClientMail, $ProjectName, $Proposal, $Deadline, $ProjectID, $Deal,$CompleteDate, $Complete, $Price, $Contract)
     {
-        $sql = "UPDATE projects SET ClientMail = :ClientMail, ProjectName = :ProjectName, Proposal = :Proposal, Deadline = :Deadline, Deal= :Deal, Complete= :Complete WHERE ProjectID = :ProjectID";
+        $sql = "UPDATE projects SET ClientMail = :ClientMail, ProjectName = :ProjectName, Proposal = :Proposal, Deadline = :Deadline, Deal= :Deal, Complete= :Complete, CompleteDate = :CompleteDate, Price = :Price, Contract = :Contract WHERE ProjectID = :ProjectID";
         $query = $this->db->prepare($sql);
-        $parameters = array(':ClientMail' => $ClientMail, ':ProjectName' => $ProjectName, ':Proposal' => $Proposal, ':Deadline' => $Deadline, ':ProjectID' => $ProjectID, ':Deal' =>$Deal, ':Complete' => $Complete);
+        $parameters = array(':ClientMail' => $ClientMail, ':ProjectName' => $ProjectName, ':Proposal' => $Proposal, ':Deadline' => $Deadline, ':ProjectID' => $ProjectID, ':Deal' =>$Deal, ':Complete' => $Complete, ':CompleteDate'=>$CompleteDate, ':Price'=>$Price, ':Contract'=>$Contract);
         $query->execute($parameters);
     }
 

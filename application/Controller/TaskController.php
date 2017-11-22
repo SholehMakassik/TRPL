@@ -22,15 +22,16 @@ class TaskController extends LoggedIn
     {
         if (isset($_POST["submit_update_task"])) {
             $input = $_POST;
-
+            $compDate = null;
             if (isset($_POST['TaskStatus'])) {
                 $status = 1;
+                $compDate = date("Y-m-d");
             } else {
                 $status = 0;
             }
 
             $Task = new Task();
-            $Task->updateTask($input['ProjectID'], $input['TaskName'], $input['TaskDesc'], $input['TaskDueDate'], $_SESSION['UserID'], $status, $input['TaskID']);
+            $Task->updateTask($input['ProjectID'], $input['TaskName'], $input['TaskDesc'], $input['TaskDueDate'], $_SESSION['UserID'], $status, $compDate,$input['TaskID']);
             $Task->cleanTaskWorker($input['TaskID']);
             foreach ($input['TaskWorker'] as $value) {
                 $Task->addTaskWorker($input['TaskID'], $value);

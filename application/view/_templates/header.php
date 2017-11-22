@@ -49,7 +49,14 @@
                 <li><a href="<?php echo URL; ?>invoice">Tagihan</a></li>
                 <?php if (isset($_SESSION['UserLevel'])) {
                     if ($_SESSION['UserLevel'] == 'SuperAdmin') { ?>
-                        <li class="<?php if ($_SESSION['Controller'] == 'penalty') echo "active"; ?>"><a href="<?php echo URL . 'penalty' ?>">Penalti</a></li>
+                        <li class=" dropdown <?php if ($_SESSION['Controller'] == 'penalty') echo "active"; ?>"><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                                                                                                   aria-expanded="false" href="#">Pelanggaran <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo URL . 'penalty/task' ?>">Pelanggaran Tugas</a></li>
+                                <li><a href="<?php echo URL.'penalty/project'; ?>">Pelanggaran Proyek</a></li>
+                                <li><a href="<?php echo URL.'penalty/invoice'; ?>">Pelanggaran Tagihan</a></li>
+                            </ul>
+                        </li>
                         <li><a href="<?php echo URL . 'account' ?>">Akun</a></li>
                     <?php }
                 } ?>

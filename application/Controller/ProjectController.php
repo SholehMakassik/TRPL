@@ -159,20 +159,28 @@ class ProjectController extends LoggedIn
             }
 
 
+
             //checkbox
             if (isset($input['Deal'])) {
                 $status['Deal'] = 1;
             } else {
                 $status['Deal'] = 0;
             }
+            $compDate = null;
             if (isset($input['Complete'])) {
                 $status['Complete'] = 1;
+                if ($input['CompleteDate']==null){
+
+                $compDate = date("Y-m-d");
+                } else {
+                    $compDate = $input['CompleteDate'];
+                }
             } else {
                 $status['Complete'] = 0;
             }
 
             $Project = new Project();
-            $Project->updateProject($input["ClientMail"], $input{"ProjectName"}, $input{"Proposal"}, $input["Deadline"], $input["ProjectID"], $status['Deal'], $status['Complete']);
+            $Project->updateProject($input["ClientMail"], $input{"ProjectName"}, $input{"Proposal"}, $input["Deadline"], $input["ProjectID"], $status['Deal'], $compDate,$status['Complete'],$input['Price']);
             $Project->cleanCategory($input['ProjectID']);
             foreach ($input['ProjectCategory'] as $value) {
                 $Project->addCategory($input['ProjectID'], $value);

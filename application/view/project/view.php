@@ -38,7 +38,18 @@
 
                         </div>
                     </div>
-<?php //print_r($project);die(); ?>
+                    <?php if($project->Complete == 1){?>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="CompleteDate">Tanggal Selesai</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control input-md"
+                                   value="<?php echo htmlspecialchars($project->CompleteDate, ENT_QUOTES, 'UTF-8'); ?>"
+                                   disabled>
+
+                        </div>
+                    </div>
+                    <?php } ?>
+
                     <!-- Appended Input-->
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="Proposal">Proposal</label>

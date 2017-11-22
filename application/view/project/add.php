@@ -58,10 +58,10 @@
                 <label class="col-md-4 control-label" for="Category">Kategori</label>
                 <div class="col-md-5">
 
-                    <select id="ProjectCategory" name="ProjectCategory[]" class="form-control chosen" multiple="multiple">
-                        <?php foreach ($category as $val){?>
+                    <select id="ProjectCategory" name="ProjectCategory[]" required class="form-control chosen" multiple="multiple">
+                        <?php foreach ($category as $val){ if (!in_array($val->CategoryID,Array(1,2,3))){?>
                             <option value="<?php echo $val->CategoryID ?>" ><?php echo $val->CategoryName ?></option>
-                        <?php }?>
+                        <?php }}?>
                     </select>
 
                 </div>

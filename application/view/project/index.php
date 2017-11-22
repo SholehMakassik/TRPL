@@ -79,7 +79,8 @@
                                         <i class="fa fa-<?php if ($project->Deal==1){ echo "check";}else{echo "times";} ?>" aria-hidden="true"></i>
                                     </td>
                                     <td class="text-center">
-                                        <i class="fa fa-<?php if ($project->Complete==1){ echo "check";}else{echo "times";} ?>" aria-hidden="true"></i>
+                                        <?php if ($project->Complete==0){ echo '<i class="fa fa-times" aria-hidden="true"></i>';}else{echo $project->CompleteDate;} ?>
+
                                     </td>
                                     <td class="text-center">
                                         <a class="btn btn-primary"

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 22, 2017 at 05:44 PM
+-- Generation Time: Nov 22, 2017 at 10:56 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -178,7 +178,28 @@ INSERT INTO `projectcategory` (`ProjectID`, `CategoryID`) VALUES
 (21, 1),
 (21, 3),
 (22, 4),
-(22, 6);
+(22, 6),
+(1, 5),
+(5, 6),
+(5, 14),
+(3, 6);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `projectpenaltyview`
+-- (See below for the actual view)
+--
+CREATE TABLE `projectpenaltyview` (
+`Username` varchar(16)
+,`Today` date
+,`TaskName` varchar(30)
+,`TaskDueDate` date
+,`PastDays` int(7)
+,`TaskStatus` tinyint(255)
+,`ProjectName` varchar(50)
+,`UserID` int(11)
+);
 
 -- --------------------------------------------------------
 
@@ -191,7 +212,9 @@ CREATE TABLE `projects` (
   `ClientMail` varchar(256) NOT NULL,
   `ProjectName` varchar(50) NOT NULL,
   `Proposal` varchar(50) NOT NULL,
+  `Contract` varchar(50) DEFAULT NULL,
   `Deadline` date NOT NULL,
+  `CompleteDate` date DEFAULT NULL,
   `Deal` tinyint(4) NOT NULL DEFAULT '0',
   `Complete` tinyint(4) NOT NULL DEFAULT '0',
   `Price` decimal(10,2) DEFAULT NULL
@@ -201,26 +224,26 @@ CREATE TABLE `projects` (
 -- Dumping data for table `projects`
 --
 
-INSERT INTO `projects` (`ProjectID`, `ClientMail`, `ProjectName`, `Proposal`, `Deadline`, `Deal`, `Complete`, `Price`) VALUES
-(1, 'example@email.com', 'Dummy Proyek', 'Dummy_Proyek.pdf', '2017-12-07', 0, 0, NULL),
-(2, 'example2@email.com', 'Dummy Proyek2', 'belumadalagi.pdf', '2017-10-14', 0, 0, NULL),
-(3, 'contoh@email.com', 'Proyek Negara', 'belumbikinfungsiupload.pdf', '2017-11-01', 1, 0, NULL),
-(5, 'hapuskanlah@gmail.com', 'Proyek Jembatan', 'belumada.pdf', '2017-10-25', 0, 0, NULL),
-(6, 'emon@mone.id', 'Forrtnite', 'lom_ada.pdf', '2017-10-31', 0, 0, NULL),
-(7, 'file@mail.com', 'Tes File', 'sakdik.png', '2017-11-03', 0, 0, NULL),
-(8, 'dwakurniawan@gmail.com', 'Nama Proyek', 'Nama_Proyek.pdf', '2017-11-03', 0, 0, NULL),
-(9, 'bxmailo@gmail.com', 'Testing', 'Testing.pdf', '2017-11-23', 0, 0, NULL),
-(12, 'tes@mail.co.id', 'Project ', 'Project_.pdf', '2017-11-30', 0, 0, NULL),
-(13, 'bxmailo@gmail.com', 'dsad', 'dsad.pdf', '2017-11-23', 0, 0, NULL),
-(14, 'bxmailo@gmail.com', 'dsad', 'dsad.pdf', '2017-11-23', 0, 0, NULL),
-(15, 'bxmailo@gmail.com', 'dsad', 'dsad.pdf', '2017-11-23', 0, 0, NULL),
-(16, 'bxmailo@gmail.com', 'dsad', 'dsad.pdf', '2017-11-23', 0, 0, NULL),
-(17, 'bxmailo@gmail.com', 'dsad', 'dsad.pdf', '2017-11-23', 0, 0, NULL),
-(18, 'bxmailo@gmail.com', 'dsad', 'dsad.pdf', '2017-11-23', 0, 0, NULL),
-(19, 'bxmailo@gmail.com', 'dsad', 'dsad.pdf', '2017-11-23', 0, 0, NULL),
-(20, 'bxmailo@gmail.com', 'dsad', 'dsad.pdf', '2017-11-23', 0, 0, NULL),
-(21, 'bxmailo@gmail.com', 'dsad', 'dsad.pdf', '2017-12-01', 0, 0, NULL),
-(22, 'bxmailo@gmail.com', 'dsadad', 'dsadad.pdf', '2017-11-23', 0, 0, NULL);
+INSERT INTO `projects` (`ProjectID`, `ClientMail`, `ProjectName`, `Proposal`, `Contract`, `Deadline`, `CompleteDate`, `Deal`, `Complete`, `Price`) VALUES
+(1, 'example@email.com', 'Dummy Proyek', 'Dummy_Proyek.pdf', NULL, '2017-12-07', NULL, 0, 0, NULL),
+(2, 'example2@email.com', 'Dummy Proyek2', 'belumadalagi.pdf', NULL, '2017-10-14', NULL, 0, 0, NULL),
+(3, 'contoh@email.com', 'Proyek Negara', 'belumbikinfungsiupload.pdf', NULL, '2017-11-01', '2017-11-22', 1, 1, '100.00'),
+(5, 'hapuskanlah@gmail.com', 'Proyek Jembatan', 'belumada.pdf', NULL, '2017-10-25', '2017-11-22', 1, 1, NULL),
+(6, 'emon@mone.id', 'Forrtnite', 'lom_ada.pdf', NULL, '2017-10-31', NULL, 0, 0, NULL),
+(7, 'file@mail.com', 'Tes File', 'sakdik.png', NULL, '2017-11-03', NULL, 0, 0, NULL),
+(8, 'dwakurniawan@gmail.com', 'Nama Proyek', 'Nama_Proyek.pdf', NULL, '2017-11-03', NULL, 0, 0, NULL),
+(9, 'bxmailo@gmail.com', 'Testing', 'Testing.pdf', NULL, '2017-11-23', NULL, 0, 0, NULL),
+(12, 'tes@mail.co.id', 'Project ', 'Project_.pdf', NULL, '2017-11-30', NULL, 0, 0, NULL),
+(13, 'bxmailo@gmail.com', 'dsad', 'dsad.pdf', NULL, '2017-11-23', NULL, 0, 0, NULL),
+(14, 'bxmailo@gmail.com', 'dsad', 'dsad.pdf', NULL, '2017-11-23', NULL, 0, 0, NULL),
+(15, 'bxmailo@gmail.com', 'dsad', 'dsad.pdf', NULL, '2017-11-23', NULL, 0, 0, NULL),
+(16, 'bxmailo@gmail.com', 'dsad', 'dsad.pdf', NULL, '2017-11-23', NULL, 0, 0, NULL),
+(17, 'bxmailo@gmail.com', 'dsad', 'dsad.pdf', NULL, '2017-11-23', NULL, 0, 0, NULL),
+(18, 'bxmailo@gmail.com', 'dsad', 'dsad.pdf', NULL, '2017-11-23', NULL, 0, 0, NULL),
+(19, 'bxmailo@gmail.com', 'dsad', 'dsad.pdf', NULL, '2017-11-23', NULL, 0, 0, NULL),
+(20, 'bxmailo@gmail.com', 'dsad', 'dsad.pdf', NULL, '2017-11-23', NULL, 0, 0, NULL),
+(21, 'bxmailo@gmail.com', 'dsad', 'dsad.pdf', NULL, '2017-12-01', NULL, 0, 0, NULL),
+(22, 'bxmailo@gmail.com', 'dsadad', 'dsadad.pdf', NULL, '2017-11-23', NULL, 0, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -234,6 +257,7 @@ CREATE TABLE `task` (
   `TaskName` varchar(30) NOT NULL,
   `TaskDesc` text,
   `TaskDueDate` date NOT NULL,
+  `TaskCompleteDate` date DEFAULT NULL,
   `TaskAuthor` int(11) NOT NULL,
   `TaskStatus` tinyint(255) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
@@ -242,30 +266,30 @@ CREATE TABLE `task` (
 -- Dumping data for table `task`
 --
 
-INSERT INTO `task` (`TaskID`, `ProjectID`, `TaskName`, `TaskDesc`, `TaskDueDate`, `TaskAuthor`, `TaskStatus`) VALUES
-(1, 1, 'Artificial Intelligence', 'Kecerdasan Buatan atau kecerdasan yang ditambahkan kepada suatu sistem yang bisa diatur dalam konteks ilmiah atau Intelegensi Artifisial atau Artificial Intelligence (AI) didefinisikan sebagai kecerdasan entitas ilmiah. Sistem seperti ini umumnya dianggap komputer. Kecerdasan diciptakan dan dimasukkan ke dalam suatu mesin (komputer) agar dapat melakukan pekerjaan seperti yang dapat dilakukan manusia. Beberapa macam bidang yang menggunakan kecerdasan buatan antara lain sistem pakar, permainan komputer (games), logika fuzzy, jaringan syaraf tiruan dan robotika.', '2017-10-24', 3, 0),
-(2, 1, 'Robotika', 'Robotika adalah satu cabang teknologi yang berhubungan dengan desain, konstruksi, operasi, disposisi struktural, pembuatan, dan aplikasi dari robot.Robotika terkait dengan ilmu pengetahuan bidang elektronika, mesin, mekanika, dan perangkat lunak komputer.', '2017-10-31', 3, 1),
-(3, 2, 'Sistem Informasi Manajemen', 'Sistem informasi manajemen atau SIM (management information system) adalah sistem perencanaan bagian dari pengendalian internal suatu bisnis yang meliputi pemanfaatan manusia, dokumen, teknologi, dan prosedur oleh akuntansi manajemen untuk memecahkan masalah bisnis seperti biaya produk, layanan, atau suatu strategi bisnis. Sistem informasi manajemen dibedakan dengan sistem informasi biasa karena SIM digunakan untuk menganalisis sistem informasi lain yang diterapkan pada aktivitas operasional organisasi. Secara akademis, istilah ini umumnya digunakan untuk merujuk pada kelompok metode manajemen informasi yang bertalian dengan otomasi atau dukungan terhadap pengambilan keputusan manusia, misalnya sistem pendukung keputusan, sistem pakar, dan sistem informasi eksekutif.', '2017-10-27', 3, 0),
-(4, 2, 'Sistem Informasi Akuntansi', 'istem Informasi Akuntansi (SIA) adalah sebuah sistem informasi yang menangani segala sesuatu yang berkenaan dengan Akuntansi. Akuntansi sendiri sebenarnya adalah sebuah sistem informasi.fungsinya Mengumpulkan dan menyimpan data tentang aktivitas dan transaksi,Memproses data menjadi informasi yang dapat digunakan dalam proses pengambilan keputusan,Melakukan kontrol secara tepat terhadap aset organisasi.', '2017-10-28', 3, 0),
-(5, 3, 'Sistem Pendukung Keputusan', 'Sistem pendukung keputusan atau decision support systems disingkat (DSS) adalah bagian dari sistem informasi berbasis komputer (termasuk sistem berbasis pengetahuan (manajemen pengetahuan)) yang dipakai untuk mendukung pengambilan keputusan dalam suatu organisasi atau perusahaan.Dapat juga dikatakan sebagai sistem komputer yang mengolah data menjadi informasi untuk mengambil keputusan dari masalah semi-terstruktur yang spesifik.', '2017-10-29', 3, 0),
-(6, 3, 'Sistem Operasi', 'Sistem operasi (operating system) adalah perangkat lunak sistem yang mengatur sumber daya dari perangkat keras dan perangkat lunak, serta sebagai jurik (daemon) untuk program komputer. Tanpa sistem operasi, pengguna tidak dapat menjalankan program aplikasi pada komputer mereka, kecuali program booting.Sistem operasi mempunyai penjadwalan yang sistematis mencakup perhitungan penggunaan memori, pemrosesan data, penyimpanan data, dan sumber daya lainnya.', '2017-10-31', 3, 0),
-(7, 4, 'Algoritma', 'Algoritma adalah urutan langkah-langkah logis penyelesaian masalah yang disusun secara sistematis dan logis.Langkah-langkah dalam algoritma harus logis dan harus dapat ditentukan bernilai salah atau benar.Dalam beberapa konteks, algoritma adalah spesifikasi urutan langkah untuk melakukan pekerjaan tertentu. Pertimbangan dalam pemilihan algoritma adalah, pertama, algoritma haruslah benar. Artinya algoritma akan memberikan keluaran yang dikehendaki dari sejumlah masukan yang diberikan. Tidak peduli sebagus apapun algoritma, kalau memberikan keluaran yang salah.', '2017-10-31', 3, 0),
-(8, 4, 'Rekayasa Perangkat Lunak', 'Rekayasa perangkat lunak atau software Engineering adalah satu bidang profesi yang mendalami cara-cara pengembangan perangkat lunak termasuk pembuatan, pemeliharaan, manajemen organisasi pengembanganan perangkat lunak dan manajemen kualitas.Rekayasa perangkat lunak adalah pengubahan perangkat lunak itu sendiri guna mengembangkan, memelihara, dan membangun kembali dengan menggunakan prinsip reakayasa untuk menghasilkan perangkat lunak yang dapat bekerja lebih efisien dan efektif untuk pengguna.', '2017-11-01', 3, 0),
-(9, 5, 'Logika Fuzzy', 'Logika Fuzzy adalah peningkatan dari logika Boolean yang berhadapan dengan konsep kebenaran sebagian. Saat logika klasik menyatakan bahwa segala hal dapat diekspresikan dalam istilah biner (0 atau 1, hitam atau putih, ya atau tidak), logika fuzzy menggantikan kebenaran boolean dengan tingkat kebenaran.', '2017-11-03', 3, 0),
-(10, 5, 'Java', 'Java adalah bahasa pemrograman yang dapat dijalankan di berbagai komputer termasuk telepon genggam. Bahasa ini awalnya dibuat oleh James Gosling saat masih bergabung di Sun Microsystems saat ini merupakan bagian dari Oracle dan dirilis tahun 1995. Bahasa ini banyak mengadopsi sintaksis yang terdapat pada C dan C++ namun dengan sintaksis model objek yang lebih sederhana serta dukungan rutin-rutin aras bawah yang minimal.', '2017-11-04', 3, 0),
-(11, 6, 'HTML', 'Hypertext Markup Language (HTML) adalah sebuah bahasa markah yang digunakan untuk membuat sebuah halaman web, menampilkan berbagai informasi di dalam sebuah penjelajah web Internet dan pemformatan hiperteks sederhana yang ditulis dalam berkas format ASCII agar dapat menghasilkan tampilan wujud yang terintegerasi. Dengan kata lain, berkas yang dibuat dalam perangkat lunak pengolah kata dan disimpan dalam format ASCII normal sehingga menjadi halaman web dengan perintah-perintah HTML.', '2017-11-05', 3, 0),
-(12, 6, 'Pascal', 'Pascal adalah bahasa pemrograman yang pertama kali di buat oleh Profesor Niklaus Wirth, seorang anggota International Federation of Information Processing (IFIP) pada tahun 1971. Dengan mengambil nama dari matematikawan Perancis, Blaise Pascal, yang pertama kali menciptakan mesin penghitung, Profesor Niklaus Wirth membuat bahasa Pascal ini sebagai alat bantu untuk mengajarkan konsep pemrograman komputer kepada mahasiswanya. Selain itu, Profesor Niklaus Wirth membuat Pascal juga untuk melengkapi kekurangan-kekurangan bahasa pemrograman yang ada pada saat itu.', '2017-11-07', 3, 0),
-(13, 7, 'Programmer', 'Programmer adalah Seseorang yang melakukan penulisan dan pengubahan script atau kode dari sumber sehingga dapat membentuk suatu program. Penyuntingan kode sumber meliputi proses pengetesan, analisis, pembetulan kesalahan, pengoptimasian algoritma, dan normalisasi kode.', '2017-11-09', 3, 0),
-(14, 7, 'System Analyst', 'Analis sistem atau system analyst adalah seseorang yang bertanggung jawab atas penelitian, perencanaan, pengkoordinasian, dan merekomendasikan pemilihan perangkat lunak dan sistem yang paling sesuai dengan kebutuhan organisasi bisnis atau perusahaan. Analis sistem memegang peranan yang sangat penting dalam proses pengembangan sistem.Analis sistem bisa pula menjadi perantara atau penghubung antara perusahaan penjual perangkat lunak dengan organisasi tempat ia bekerja, dan bertanggung jawab atas analisis biaya pengembangan, usulan desain dan pengembangan, serta menentukan rentang waktu yang diperlukan. Analis sistem bertanggung jawab pula atas studi kelayakan atas sistem komputer sebelum membuat satu usulan kepada pihak manajemen perusahaan.', '2017-11-11', 3, 0),
-(15, 1, 'SPPK', 'Membuat SPPK Fuzzy', '2017-12-09', 3, 0),
-(16, 1, 'Sistem Pakar', 'Sistem Pakar CF', '2017-12-07', 3, 0),
-(17, 1, 'Sistem Pakar', 'Sistem Pakar CF', '2017-12-07', 3, 0),
-(18, 1, 'Sistem Pakar 2', 'Sistem Pakar CF2', '2017-12-07', 3, 0),
-(19, 1, 'Datamining', 'Metode Naive Bayes', '2017-12-08', 3, 0),
-(20, 1, 'Datamining 2', 'Metode ANN', '2017-11-30', 3, 0),
-(21, 1, 'Artificial Intelligence 2', 'A*', '2017-11-30', 3, 0),
-(22, 1, 'Desain UI', 'UInya gini', '2017-11-23', 3, 0),
-(23, 1, 'ERD', 'sadasdasczx', '2017-11-22', 3, 0);
+INSERT INTO `task` (`TaskID`, `ProjectID`, `TaskName`, `TaskDesc`, `TaskDueDate`, `TaskCompleteDate`, `TaskAuthor`, `TaskStatus`) VALUES
+(1, 1, 'Artificial Intelligence', 'Kecerdasan Buatan atau kecerdasan yang ditambahkan kepada suatu sistem yang bisa diatur dalam konteks ilmiah atau Intelegensi Artifisial atau Artificial Intelligence (AI) didefinisikan sebagai kecerdasan entitas ilmiah. Sistem seperti ini umumnya dianggap komputer. Kecerdasan diciptakan dan dimasukkan ke dalam suatu mesin (komputer) agar dapat melakukan pekerjaan seperti yang dapat dilakukan manusia. Beberapa macam bidang yang menggunakan kecerdasan buatan antara lain sistem pakar, permainan komputer (games), logika fuzzy, jaringan syaraf tiruan dan robotika.', '2017-10-24', NULL, 3, 0),
+(2, 1, 'Robotika', 'Robotika adalah satu cabang teknologi yang berhubungan dengan desain, konstruksi, operasi, disposisi struktural, pembuatan, dan aplikasi dari robot.Robotika terkait dengan ilmu pengetahuan bidang elektronika, mesin, mekanika, dan perangkat lunak komputer.', '2017-10-31', NULL, 3, 1),
+(3, 2, 'Sistem Informasi Manajemen', 'Sistem informasi manajemen atau SIM (management information system) adalah sistem perencanaan bagian dari pengendalian internal suatu bisnis yang meliputi pemanfaatan manusia, dokumen, teknologi, dan prosedur oleh akuntansi manajemen untuk memecahkan masalah bisnis seperti biaya produk, layanan, atau suatu strategi bisnis. Sistem informasi manajemen dibedakan dengan sistem informasi biasa karena SIM digunakan untuk menganalisis sistem informasi lain yang diterapkan pada aktivitas operasional organisasi. Secara akademis, istilah ini umumnya digunakan untuk merujuk pada kelompok metode manajemen informasi yang bertalian dengan otomasi atau dukungan terhadap pengambilan keputusan manusia, misalnya sistem pendukung keputusan, sistem pakar, dan sistem informasi eksekutif.', '2017-10-27', NULL, 3, 0),
+(4, 2, 'Sistem Informasi Akuntansi', 'istem Informasi Akuntansi (SIA) adalah sebuah sistem informasi yang menangani segala sesuatu yang berkenaan dengan Akuntansi. Akuntansi sendiri sebenarnya adalah sebuah sistem informasi.fungsinya Mengumpulkan dan menyimpan data tentang aktivitas dan transaksi,Memproses data menjadi informasi yang dapat digunakan dalam proses pengambilan keputusan,Melakukan kontrol secara tepat terhadap aset organisasi.', '2017-10-28', NULL, 3, 0),
+(5, 3, 'Sistem Pendukung Keputusan', 'Sistem pendukung keputusan atau decision support systems disingkat (DSS) adalah bagian dari sistem informasi berbasis komputer (termasuk sistem berbasis pengetahuan (manajemen pengetahuan)) yang dipakai untuk mendukung pengambilan keputusan dalam suatu organisasi atau perusahaan.Dapat juga dikatakan sebagai sistem komputer yang mengolah data menjadi informasi untuk mengambil keputusan dari masalah semi-terstruktur yang spesifik.', '2017-10-29', NULL, 3, 0),
+(6, 3, 'Sistem Operasi', 'Sistem operasi (operating system) adalah perangkat lunak sistem yang mengatur sumber daya dari perangkat keras dan perangkat lunak, serta sebagai jurik (daemon) untuk program komputer. Tanpa sistem operasi, pengguna tidak dapat menjalankan program aplikasi pada komputer mereka, kecuali program booting.Sistem operasi mempunyai penjadwalan yang sistematis mencakup perhitungan penggunaan memori, pemrosesan data, penyimpanan data, dan sumber daya lainnya.', '2017-10-31', NULL, 3, 0),
+(7, 4, 'Algoritma', 'Algoritma adalah urutan langkah-langkah logis penyelesaian masalah yang disusun secara sistematis dan logis.Langkah-langkah dalam algoritma harus logis dan harus dapat ditentukan bernilai salah atau benar.Dalam beberapa konteks, algoritma adalah spesifikasi urutan langkah untuk melakukan pekerjaan tertentu. Pertimbangan dalam pemilihan algoritma adalah, pertama, algoritma haruslah benar. Artinya algoritma akan memberikan keluaran yang dikehendaki dari sejumlah masukan yang diberikan. Tidak peduli sebagus apapun algoritma, kalau memberikan keluaran yang salah.', '2017-10-31', NULL, 3, 0),
+(8, 4, 'Rekayasa Perangkat Lunak', 'Rekayasa perangkat lunak atau software Engineering adalah satu bidang profesi yang mendalami cara-cara pengembangan perangkat lunak termasuk pembuatan, pemeliharaan, manajemen organisasi pengembanganan perangkat lunak dan manajemen kualitas.Rekayasa perangkat lunak adalah pengubahan perangkat lunak itu sendiri guna mengembangkan, memelihara, dan membangun kembali dengan menggunakan prinsip reakayasa untuk menghasilkan perangkat lunak yang dapat bekerja lebih efisien dan efektif untuk pengguna.', '2017-11-01', NULL, 3, 0),
+(9, 5, 'Logika Fuzzy', 'Logika Fuzzy adalah peningkatan dari logika Boolean yang berhadapan dengan konsep kebenaran sebagian. Saat logika klasik menyatakan bahwa segala hal dapat diekspresikan dalam istilah biner (0 atau 1, hitam atau putih, ya atau tidak), logika fuzzy menggantikan kebenaran boolean dengan tingkat kebenaran.', '2017-11-03', NULL, 3, 0),
+(10, 5, 'Java', 'Java adalah bahasa pemrograman yang dapat dijalankan di berbagai komputer termasuk telepon genggam. Bahasa ini awalnya dibuat oleh James Gosling saat masih bergabung di Sun Microsystems saat ini merupakan bagian dari Oracle dan dirilis tahun 1995. Bahasa ini banyak mengadopsi sintaksis yang terdapat pada C dan C++ namun dengan sintaksis model objek yang lebih sederhana serta dukungan rutin-rutin aras bawah yang minimal.', '2017-11-04', NULL, 3, 0),
+(11, 6, 'HTML', 'Hypertext Markup Language (HTML) adalah sebuah bahasa markah yang digunakan untuk membuat sebuah halaman web, menampilkan berbagai informasi di dalam sebuah penjelajah web Internet dan pemformatan hiperteks sederhana yang ditulis dalam berkas format ASCII agar dapat menghasilkan tampilan wujud yang terintegerasi. Dengan kata lain, berkas yang dibuat dalam perangkat lunak pengolah kata dan disimpan dalam format ASCII normal sehingga menjadi halaman web dengan perintah-perintah HTML.', '2017-11-05', NULL, 3, 0),
+(12, 6, 'Pascal', 'Pascal adalah bahasa pemrograman yang pertama kali di buat oleh Profesor Niklaus Wirth, seorang anggota International Federation of Information Processing (IFIP) pada tahun 1971. Dengan mengambil nama dari matematikawan Perancis, Blaise Pascal, yang pertama kali menciptakan mesin penghitung, Profesor Niklaus Wirth membuat bahasa Pascal ini sebagai alat bantu untuk mengajarkan konsep pemrograman komputer kepada mahasiswanya. Selain itu, Profesor Niklaus Wirth membuat Pascal juga untuk melengkapi kekurangan-kekurangan bahasa pemrograman yang ada pada saat itu.', '2017-11-07', NULL, 3, 0),
+(13, 7, 'Programmer', 'Programmer adalah Seseorang yang melakukan penulisan dan pengubahan script atau kode dari sumber sehingga dapat membentuk suatu program. Penyuntingan kode sumber meliputi proses pengetesan, analisis, pembetulan kesalahan, pengoptimasian algoritma, dan normalisasi kode.', '2017-11-09', NULL, 3, 0),
+(14, 7, 'System Analyst', 'Analis sistem atau system analyst adalah seseorang yang bertanggung jawab atas penelitian, perencanaan, pengkoordinasian, dan merekomendasikan pemilihan perangkat lunak dan sistem yang paling sesuai dengan kebutuhan organisasi bisnis atau perusahaan. Analis sistem memegang peranan yang sangat penting dalam proses pengembangan sistem.Analis sistem bisa pula menjadi perantara atau penghubung antara perusahaan penjual perangkat lunak dengan organisasi tempat ia bekerja, dan bertanggung jawab atas analisis biaya pengembangan, usulan desain dan pengembangan, serta menentukan rentang waktu yang diperlukan. Analis sistem bertanggung jawab pula atas studi kelayakan atas sistem komputer sebelum membuat satu usulan kepada pihak manajemen perusahaan.', '2017-11-11', NULL, 3, 0),
+(15, 1, 'SPPK', 'Membuat SPPK Fuzzy', '2017-12-09', NULL, 3, 0),
+(16, 1, 'Sistem Pakar', 'Sistem Pakar CF', '2017-12-07', NULL, 3, 0),
+(17, 1, 'Sistem Pakar', 'Sistem Pakar CF', '2017-12-07', NULL, 3, 0),
+(18, 1, 'Sistem Pakar 2', 'Sistem Pakar CF2', '2017-12-07', NULL, 3, 0),
+(19, 1, 'Datamining', 'Metode Naive Bayes', '2017-12-08', NULL, 3, 0),
+(20, 1, 'Datamining 2', 'Metode ANN', '2017-11-30', NULL, 3, 0),
+(21, 1, 'Artificial Intelligence 2', 'A*', '2017-11-30', NULL, 3, 0),
+(22, 1, 'Desain UI', 'UInya gini', '2017-11-23', NULL, 3, 0),
+(23, 1, 'ERD', 'sadasdasczx', '2017-11-16', '2017-11-20', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -283,9 +307,9 @@ CREATE TABLE `taskcategory` (
 --
 
 INSERT INTO `taskcategory` (`taskID`, `categoryID`) VALUES
+(23, 2),
 (1, 1),
-(1, 3),
-(23, 2);
+(1, 3);
 
 -- --------------------------------------------------------
 
@@ -345,6 +369,7 @@ CREATE TABLE `taskview` (
 ,`TaskAuthor` varchar(16)
 ,`ProjectName` varchar(50)
 ,`ProjectID` int(11)
+,`TaskCompleteDate` date
 );
 
 -- --------------------------------------------------------
@@ -380,12 +405,12 @@ INSERT INTO `taskworker` (`TaskID`, `UserID`) VALUES
 (20, 5),
 (21, 3),
 (21, 5),
-(1, 3),
-(1, 4),
-(1, 5),
 (22, 3),
 (23, 3),
-(23, 4);
+(23, 4),
+(1, 3),
+(1, 4),
+(1, 5);
 
 -- --------------------------------------------------------
 
@@ -460,7 +485,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `overduetaskview`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `overduetaskview`  AS  select `taskview`.`TaskAuthor` AS `TaskAuthor`,`taskview`.`ProjectName` AS `ProjectName`,`taskview`.`TaskName` AS `TaskName`,`taskview`.`TaskDueDate` AS `TaskDueDate`,curdate() AS `Today`,(to_days(curdate()) - to_days(`taskview`.`TaskDueDate`)) AS `PastDays` from `taskview` where (curdate() > `taskview`.`TaskDueDate`) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `overduetaskview`  AS  select `taskview`.`TaskAuthor` AS `TaskAuthor`,`taskview`.`ProjectName` AS `ProjectName`,`taskview`.`TaskName` AS `TaskName`,`taskview`.`TaskDueDate` AS `TaskDueDate`,curdate() AS `Today`,(to_days(curdate()) - to_days(`taskview`.`TaskDueDate`)) AS `PastDays` from `taskview` where ((curdate() > `taskview`.`TaskDueDate`) and (`taskview`.`TaskStatus` = 0)) ;
 
 -- --------------------------------------------------------
 
@@ -469,7 +494,16 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `penaltyview`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `penaltyview`  AS  select `user`.`Username` AS `Username`,curdate() AS `Today`,`taskview`.`TaskName` AS `TaskName`,`taskview`.`TaskDueDate` AS `TaskDueDate`,(to_days(curdate()) - to_days(`taskview`.`TaskDueDate`)) AS `PastDays`,`taskview`.`TaskStatus` AS `TaskStatus`,`taskview`.`ProjectName` AS `ProjectName`,`taskworker`.`UserID` AS `UserID` from ((`user` join `taskworker` on((`taskworker`.`UserID` = `user`.`UserID`))) join `taskview` on((`taskworker`.`TaskID` = `taskview`.`TaskID`))) where (curdate() > `taskview`.`TaskDueDate`) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `penaltyview`  AS  select `user`.`Username` AS `Username`,curdate() AS `Today`,`taskview`.`TaskName` AS `TaskName`,`taskview`.`TaskDueDate` AS `TaskDueDate`,(case `taskview`.`TaskStatus` when 1 then (to_days(`taskview`.`TaskCompleteDate`) - to_days(`taskview`.`TaskDueDate`)) else (to_days(curdate()) - to_days(`taskview`.`TaskDueDate`)) end) AS `PastDays`,`taskview`.`TaskStatus` AS `TaskStatus`,`taskview`.`ProjectName` AS `ProjectName`,`taskworker`.`UserID` AS `UserID` from ((`user` join `taskworker` on((`taskworker`.`UserID` = `user`.`UserID`))) join `taskview` on((`taskworker`.`TaskID` = `taskview`.`TaskID`))) where (((curdate() > `taskview`.`TaskDueDate`) and (`taskview`.`TaskStatus` = 0)) or (`taskview`.`TaskCompleteDate` > `taskview`.`TaskDueDate`)) ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `projectpenaltyview`
+--
+DROP TABLE IF EXISTS `projectpenaltyview`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `projectpenaltyview`  AS  select `user`.`Username` AS `Username`,curdate() AS `Today`,`taskview`.`TaskName` AS `TaskName`,`taskview`.`TaskDueDate` AS `TaskDueDate`,(case `taskview`.`TaskStatus` when 1 then (to_days(`taskview`.`TaskCompleteDate`) - to_days(`taskview`.`TaskDueDate`)) else (to_days(curdate()) - to_days(`taskview`.`TaskDueDate`)) end) AS `PastDays`,`taskview`.`TaskStatus` AS `TaskStatus`,`taskview`.`ProjectName` AS `ProjectName`,`taskworker`.`UserID` AS `UserID` from ((`user` join `taskworker` on((`taskworker`.`UserID` = `user`.`UserID`))) join `taskview` on((`taskworker`.`TaskID` = `taskview`.`TaskID`))) where (((curdate() > `taskview`.`TaskDueDate`) and (`taskview`.`TaskStatus` = 0)) or (`taskview`.`TaskCompleteDate` > `taskview`.`TaskDueDate`)) ;
 
 -- --------------------------------------------------------
 
@@ -487,7 +521,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `taskview`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `taskview`  AS  select `t`.`TaskID` AS `TaskID`,`t`.`TaskName` AS `TaskName`,`t`.`TaskDesc` AS `TaskDesc`,`t`.`TaskDueDate` AS `TaskDueDate`,`t`.`TaskStatus` AS `TaskStatus`,`u`.`Username` AS `TaskAuthor`,`p`.`ProjectName` AS `ProjectName`,`t`.`ProjectID` AS `ProjectID` from ((`task` `t` join `user` `u` on((`t`.`TaskAuthor` = `u`.`UserID`))) join `projects` `p` on((`t`.`ProjectID` = `p`.`ProjectID`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `taskview`  AS  select `t`.`TaskID` AS `TaskID`,`t`.`TaskName` AS `TaskName`,`t`.`TaskDesc` AS `TaskDesc`,`t`.`TaskDueDate` AS `TaskDueDate`,`t`.`TaskStatus` AS `TaskStatus`,`u`.`Username` AS `TaskAuthor`,`p`.`ProjectName` AS `ProjectName`,`t`.`ProjectID` AS `ProjectID`,`t`.`TaskCompleteDate` AS `TaskCompleteDate` from ((`task` `t` join `user` `u` on((`t`.`TaskAuthor` = `u`.`UserID`))) join `projects` `p` on((`t`.`ProjectID` = `p`.`ProjectID`))) ;
 
 -- --------------------------------------------------------
 

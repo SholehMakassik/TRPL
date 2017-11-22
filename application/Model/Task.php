@@ -23,12 +23,11 @@ class Task extends Model
         return $query->fetchAll();
     }
 
-    public function updateTask($ProjectID, $TaskName, $TaskDesc, $TaskDueDate, $TaskAuthor, $TaskStatus, $TaskID)
+    public function updateTask($ProjectID, $TaskName, $TaskDesc, $TaskDueDate, $TaskAuthor, $TaskStatus, $TaskCompleteDate,$TaskID)
     {
-        $sql = "UPDATE task SET ProjectID = :ProjectID, TaskName = :TaskName, TaskDesc = :TaskDesc, TaskDueDate = :TaskDueDate, TaskAuthor = :TaskAuthor, TaskStatus = :TaskStatus WHERE TaskID=:TaskID";
+        $sql = "UPDATE task SET ProjectID = :ProjectID, TaskName = :TaskName, TaskDesc = :TaskDesc, TaskDueDate = :TaskDueDate, TaskAuthor = :TaskAuthor, TaskStatus = :TaskStatus, TaskCompleteDate = :TaskCompleteDate WHERE TaskID=:TaskID";
         $query = $this->db->prepare($sql);
-        $parameters = array(':ProjectID' => $ProjectID, ':TaskName' => $TaskName, ':TaskDesc' => $TaskDesc, ':TaskDueDate' => $TaskDueDate, ':TaskAuthor' => $TaskAuthor, ':TaskStatus' => $TaskStatus, ':TaskID' => $TaskID);
-        //echo '[ PDO DEBUG ]: ' . Helper::debugPDO($sql, $parameters);  exit();
+        $parameters = array(':ProjectID' => $ProjectID, ':TaskName' => $TaskName, ':TaskDesc' => $TaskDesc, ':TaskDueDate' => $TaskDueDate, ':TaskAuthor' => $TaskAuthor, ':TaskStatus' => $TaskStatus, ':TaskID' => $TaskID, ':TaskCompleteDate' => $TaskCompleteDate);
         $query->execute($parameters);
     }
 
